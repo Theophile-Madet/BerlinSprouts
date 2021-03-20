@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'sprouts_app/sprouts.css' %}">
+</head>
+<body>
+    <form class="add_meal_form" action="add_meal" method="post" >
+        {% csrf_token %}
+        <div class="add_meal_form_line">
+            <label for="meal_date">Date : </label><input type="date" name="meal_date" id="meal_date" value="{% now "Y-m-d" %}">
+            <label for="meal_name">Meal : </label><input type="text" name="meal_name" id="meal_name">
+        </div>
+        <div class="add_meal_form_line">
+            <label for="meal_ingredient_1">Ingredient 1 : </label><input type="text" name="meal_ingredient_1" id="meal_ingredient_1">
+            <label for="meal_ingredient_2">Ingredient 2 : </label><input type="text" name="meal_ingredient_2" id="meal_ingredient_2">
+            <label for="meal_ingredient_3">Ingredient 3: </label><input type="text" name="meal_ingredient_3" id="meal_ingredient_3">
+        </div>
+        <div class="add_meal_form_line">
+            <input type="submit" value="Add">
+        </div>
+    </form>
+    <table>
+        <tr>
+            <th>Ingredient</th>
+            <th>Last use</th>
+        </tr>
+        {% for ingredient in oldest_ingredients %}
+            <tr>
+                <td>{{ingredient.name}}</td>
+                <td>{{ingredient.last_used_date}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
